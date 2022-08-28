@@ -2,7 +2,7 @@ import styles from './Searchbar.module.css';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { nanoid } from 'nanoid';
-import svg from '../../images/search.svg#search';
+import { Button } from 'components/Button/Button';
 
 class Searchbar extends React.Component {
   render() {
@@ -19,11 +19,8 @@ class Searchbar extends React.Component {
           placeholder="Search images..."
           onChange={onChange}
         />
-        <button type="submit" className={button} onSubmit={onSubmit}>
-          <svg className={icon}>
-            <use href={svg}></use>
-          </svg>
-        </button>
+        <Button type="submit" style={button} onSubmit={onSubmit}>
+        </Button>
       </form>
     );
   }

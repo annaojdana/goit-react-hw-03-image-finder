@@ -48,13 +48,15 @@
   fill: #fafafa;
 }
 .button {
-  border-bottom-right-radius: 6px;
-  border-top-right-radius: 6px;
   width: 40px;
   height: 40px;
   padding: 0px;
-  background-color: #2ea44f;
   border: none;
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+  background-image: url('./img/search-icon.svg');
+  background-position: center;
+  background-repeat: no-repeat;
 }
 @media (max-width: 480px) {
   .input {

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ImageGallery from './ImageGallery/ImageGallery';
 import Searchbar from './Searchbar/Searchbar';
 
 class App extends Component {
@@ -59,6 +60,9 @@ class App extends Component {
     return (
       <>
         <Searchbar onChange={this.handleFilter} />
+        <ImageGallery>
+          
+        </ImageGallery>
       </>
     );
   }
