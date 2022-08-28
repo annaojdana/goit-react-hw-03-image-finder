@@ -11,27 +11,43 @@
     background-position: 0% 50%;
   }
 }
-.form {
-  width: 100%;
-  height: 100px;
-  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-  background-size: 400% 400%;
-  animation: gradient 15s ease infinite;
+.Searchbar {
+  top: 0;
+  left: 0;
+  position: sticky;
+  z-index: 1100;
   display: flex;
   justify-content: center;
   align-items: center;
+  min-height: 64px;
+  padding-right: 24px;
+  padding-left: 24px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  color: #fff;
+  background-color: #3f51b5;
+  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
+    0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+}
+.form {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 600px;
+  background-color: #fff;
+  border-radius: 3px;
+  overflow: hidden;
 }
 
 .input {
-  outline: transparent;
+  display: inline-block;
+  width: 100%;
+  font: inherit;
+  font-size: 20px;
   border: none;
-  padding: 0 14px;
-  width: 400px;
-  height: 40px;
-  border-bottom-left-radius: 6px;
-  border-top-left-radius: 6px;
-  font-size: 16px;
-  transition: border 0.4s;
+  outline: none;
+  padding-left: 4px;
+  padding-right: 4px;
 }
 .input:focus {
   outline: transparent;
@@ -41,26 +57,25 @@
   outline: transparent;
   border: 2px solid rgba(46, 164, 79, 0.4);
 }
-
+.input::placeholder{
+  font: inherit;
+  font-size: 18px;
+}
 .button {
-  width: 40px;
-  height: 40px;
-  padding: 0px;
-  border: none;
-  border-top-right-radius: 6px;
-  border-bottom-right-radius: 6px;
-  background-image: url('./img/search-icon.svg');
-  background-position: center;
+  display: inline-block;
+  width: 48px;
+  height: 48px;
+  border: 0;
+  background-image: url('https://image.flaticon.com/icons/svg/149/149852.svg');
+  background-size: 40%;
   background-repeat: no-repeat;
+  background-position: center;
   opacity: 0.6;
   transition: opacity 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  outline: none;
 }
 .button:hover {
   opacity: 1;
 }
-@media (max-width: 480px) {
-  .input {
-    width: 180px;
-    font-size: 12px;
-  }
-}
+

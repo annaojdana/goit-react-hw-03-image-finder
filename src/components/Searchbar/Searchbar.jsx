@@ -2,31 +2,32 @@ import styles from './Searchbar.module.css';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { nanoid } from 'nanoid';
-import { Button } from 'components/Button/Button';
 
 class Searchbar extends React.Component {
   render() {
-    const { onChange, onSubmit } = this.props;
-    const { form, input, button } = styles;
+    const { onSubmit } = this.props;
+    const { form, input, button, searchbar } = styles;
     return (
-      <form className={form} id="search-form">
-        <input
-          key={nanoid()}
-          className={input}
-          type="text"
-          name="searchQuery"
-          autoComplete="off"
-          placeholder="Search images..."
-          onChange={onChange}
-        />
-        <Button type="submit" style={button} onSubmit={onSubmit}>
-        </Button>
-      </form>
+      <header className={searchbar}>
+        <form className={form}>
+          <button type="submit" className={button} onSubmit={onSubmit}>
+            <span className="button-label">Search</span>
+          </button>
+          <input
+            key={nanoid()}
+            className={input}
+            type="text"
+            autocomplete="off"
+            autofocus
+            placeholder="Search images and photos"
+          />
+        </form>
+      </header>
     );
   }
 }
 
 export default Searchbar;
 Searchbar.propTypes = {
-  onChange: PropTypes.func,
+  onSubmit: PropTypes.func.isRequired,
 };
