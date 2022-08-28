@@ -2,21 +2,29 @@ import styles from './ImageGallery.module.css';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ImageGalleryItem from 'components/ImageGalleryItem/ImageGalleryItem';
+import { nanoid } from 'nanoid';
 
 class ImageGallery extends Component {
   render() {
-    const { wrapper } = styles;
-    const { images } = this.props;
+    const { gallery } = styles;
+    const { imagesData, openModal } = this.props;
     return (
-      <ul className={wrapper}>
-        {images.map(({ url, alt }) => {
-          <ImageGalleryItem src={url} alt={alt} />;
+      <ul className={gallery}>
+        {imagesData.map(imageData => {
+          <ImageGalleryItem
+            key={nanoid()}
+            imageData={imageData}
+            openModal={openModal}
+          />;
         })}
       </ul>
     );
   }
 }
 
-ImageGallery.propTypes = {};
+ImageGallery.propTypes = {
+  imagesData: PropTypes.array.isRequired,
+  openModal: PropTypes.func.isRequired,
+};
 
 export default ImageGallery;
