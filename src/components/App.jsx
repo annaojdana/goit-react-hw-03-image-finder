@@ -7,30 +7,27 @@ class App extends Component {
     filter: '',
   };
 
-  // onSubmit = ({ name, number }) => {
-  //   const { contacts } = this.state;
-  //   const newContact = {
-  //     id: nanoid(),
-  //     name,
-  //     number,
-  //   };
+  onSubmit = (e) => {
+    e.preventDefault();
+    const query = searchQuery.value;
+    limit = 40;
+    gallery.innerHTML = '';
 
-  //   if (contacts.some(contact => contact.name === name)) {
-  //     alert(`${name} is already in contacts`);
-  //     return;
-  //   }
-  //   if (contacts.some(contact => contact.number === number)) {
-  //     const filteredNumber = contacts.filter(
-  //       contact => contact.number === number
-  //     )[0].name;
-  //     console.log(filteredNumber);
-  //     alert(`${number} is already in contact with ${filteredNumber} `);
-  //     return;
-  //   }
-  //   this.setState(({ contacts }) => ({
-  //     contacts: [newContact, ...contacts],
-  //   }));
-  // };
+    getPhotos(query, limit)
+      .then(data => {
+        data.totalHits === 0
+          ? Notiflix.Notify.failure(
+              'Sorry, there are no images matching your search query. Please try again.'
+            )
+          : Notiflix.Notify.success(
+              `Hooray! We found ${data.totalHits} images.`
+            );
+
+        renderPhotosInfo(data);
+      })
+      .catch(error => console.log(error));
+
+  };
 
   // handleFilter = e => {
   //   this.setState({ filter: e.target.value });
@@ -61,7 +58,7 @@ class App extends Component {
       <>
         <Searchbar onChange={this.handleFilter} />
         <ImageGallery>
-          
+
         </ImageGallery>
       </>
     );

@@ -7,7 +7,7 @@ import { Button } from 'components/Button/Button';
 class Searchbar extends React.Component {
   render() {
     const { onChange, onSubmit } = this.props;
-    const { form, input, button, icon } = styles;
+    const { form, input, button } = styles;
     return (
       <form className={form} id="search-form">
         <input
