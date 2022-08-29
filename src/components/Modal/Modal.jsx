@@ -1,18 +1,25 @@
+import styles from './Modal.module.css';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 class Modal extends Component {
   render() {
-    return (
-      <div>
+    const { overlay, modal } = styles;
+    const { tags, largeImageURL } = this.props;
 
+    return (
+      <div className={overlay}>
+        <div className={modal}>
+          <img src={largeImageURL} alt={tags} />
+        </div>
       </div>
     );
   }
 }
 
 Modal.propTypes = {
-
+  largeImageURL: PropTypes.string,
+  tags: PropTypes.string,
 };
 
 export default Modal;
