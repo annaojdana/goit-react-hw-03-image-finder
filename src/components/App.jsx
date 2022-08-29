@@ -1,3 +1,4 @@
+import styles from './App.module.css';
 import React, { Component } from 'react';
 import getImages from 'services/getImages';
 import ImageGallery from './ImageGallery/ImageGallery';
@@ -24,8 +25,7 @@ class App extends Component {
               'Sorry, there are no images matching your search query. Please try again.'
             )
           : alert(`Hooray! We found ${data.totalHits} images.`);
-       return this.setState(oldState => ({ ...oldState, images: data.hits }));
-
+        return this.setState(oldState => ({ ...oldState, images: data.hits }));
       })
       .catch(error => console.log(error));
   };
@@ -54,13 +54,14 @@ class App extends Component {
   // };
 
   render() {
+    const { container } = styles;
     const { images } = this.state;
     console.log(this.state);
     return (
-      <>
+      <div className={container}>
         <Searchbar onSubmit={this.onSubmit} />
         <ImageGallery imagesData={images} />
-      </>
+      </div>
     );
   }
 }
