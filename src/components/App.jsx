@@ -1,32 +1,33 @@
 import React, { Component } from 'react';
+import getImages from 'services/getImages';
 import ImageGallery from './ImageGallery/ImageGallery';
 import Searchbar from './Searchbar/Searchbar';
 
 class App extends Component {
   state = {
     filter: '',
+    images: [],
   };
 
-  onSubmit = (e) => {
+  onSubmit = e => {
     e.preventDefault();
-    const query = searchQuery.value;
-    limit = 40;
-    gallery.innerHTML = '';
 
-    getPhotos(query, limit)
+    const { queryInput } = e.target.elements;
+    const query = queryInput.value;
+    console.log(query);
+    const limit = 12;
+
+    getImages(query, limit)
       .then(data => {
         data.totalHits === 0
-          ? Notiflix.Notify.failure(
+          ? alert(
               'Sorry, there are no images matching your search query. Please try again.'
             )
-          : Notiflix.Notify.success(
-              `Hooray! We found ${data.totalHits} images.`
-            );
+          : alert(`Hooray! We found ${data.totalHits} images.`);
+       return this.setState(oldState => ({ ...oldState, images: data.hits }));
 
-        renderPhotosInfo(data);
       })
       .catch(error => console.log(error));
-
   };
 
   // handleFilter = e => {
@@ -53,13 +54,12 @@ class App extends Component {
   // };
 
   render() {
-    // const { contacts, filter } = this.state;
+    const { images } = this.state;
+    console.log(this.state);
     return (
       <>
-        <Searchbar onChange={this.handleFilter} />
-        <ImageGallery>
-
-        </ImageGallery>
+        <Searchbar onSubmit={this.onSubmit} />
+        <ImageGallery imagesData={images} />
       </>
     );
   }

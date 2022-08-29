@@ -11,7 +11,7 @@ class ImageGallery extends Component {
     return (
       <ul className={gallery}>
         {imagesData.map(imageData => {
-          <ImageGalleryItem
+         return <ImageGalleryItem
             key={nanoid()}
             imageData={imageData}
             openModal={openModal}
@@ -23,8 +23,8 @@ class ImageGallery extends Component {
 }
 
 ImageGallery.propTypes = {
-  imagesData: PropTypes.array.isRequired,
-  openModal: PropTypes.func.isRequired,
+  imagesData: PropTypes.array,
+  openModal: PropTypes.func,
 };
 
 export default ImageGallery;

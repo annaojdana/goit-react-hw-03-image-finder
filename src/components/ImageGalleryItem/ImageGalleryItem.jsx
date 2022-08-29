@@ -8,13 +8,13 @@ class ImageGalleryItem extends Component {
 
     const { imageData, openModal } = this.props;
     const { item, image } = styles;
-    const { smallImageUrl, tags, largeImageURL } = imageData;
+    const { webformatURL, tags, largeImageURL } = imageData;
 
     return (
       <li className={item}>
         <img
           className={image}
-          src={smallImageUrl}
+          src={webformatURL}
           alt={tags}
           onClick={() => openModal(largeImageURL, tags)}
         />
@@ -24,8 +24,8 @@ class ImageGalleryItem extends Component {
 }
 
 ImageGalleryItem.propTypes = {
-  imageData: PropTypes.object.isRequired,
-  openModal: PropTypes.func.isRequired,
+  imageData: PropTypes.object,
+  openModal: PropTypes.func,
 };
 
 export default ImageGalleryItem;
