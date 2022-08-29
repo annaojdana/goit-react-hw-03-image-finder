@@ -10,13 +10,13 @@ class ImageGallery extends Component {
     const { imagesData, openModal } = this.props;
     return (
       <ul className={gallery}>
-        {imagesData.map(imageData => {
-         return <ImageGalleryItem
+        {imagesData.map(imageData => (
+          <ImageGalleryItem
             key={nanoid()}
             imageData={imageData}
             openModal={openModal}
-          />;
-        })}
+          />
+        ))}
       </ul>
     );
   }
