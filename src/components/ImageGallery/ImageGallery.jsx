@@ -23,8 +23,8 @@ class ImageGallery extends Component {
 }
 
 ImageGallery.propTypes = {
-  imagesData: PropTypes.array,
-  openModal: PropTypes.func,
+  imagesData: PropTypes.array.isRequired,
+  openModal: PropTypes.func.isRequired,
 };
 
 export default ImageGallery;

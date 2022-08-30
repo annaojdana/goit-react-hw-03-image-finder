@@ -24,8 +24,8 @@ class ImageGalleryItem extends Component {
 }
 
 ImageGalleryItem.propTypes = {
-  imageData: PropTypes.object,
-  openModal: PropTypes.func,
+  imageData: PropTypes.object.isRequired,
+  openModal: PropTypes.func.isRequired,
 };
 
 export default ImageGalleryItem;
