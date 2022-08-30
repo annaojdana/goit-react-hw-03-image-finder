@@ -5,15 +5,18 @@ import ImageGallery from './ImageGallery/ImageGallery';
 import Searchbar from './Searchbar/Searchbar';
 import { Button } from './Button/Button';
 import Loader from './Loader/Loader';
+import Modal from './Modal/Modal';
 
 const INITIAL_STATE = {
   query: '',
   images: [],
   limitImages: 12,
   numberOfHits: 0,
-  openModal: false,
+  showModal: false,
   isLoading: false,
   errorMessage: '',
+  modalImageUrl: '',
+  modalImageAlt: '',
 };
 class App extends Component {
   state = {
@@ -37,6 +40,16 @@ class App extends Component {
       ...oldState,
       ...INITIAL_STATE,
     }));
+
+  setShowModal = (showModal, modalImageUrl, modalImageAlt) =>
+    this.setState(oldState => ({
+      ...oldState,
+      showModal: showModal,
+      modalImageUrl: modalImageUrl,
+      modalImageAlt: modalImageAlt,
+    }));
+
+  handleModalClose = () => this.setShowModal(false);
 
   onSubmit = e => {
     e.preventDefault();
@@ -72,6 +85,7 @@ class App extends Component {
 
   handleModal = (urlLargeImage, altForLargeImage) => {
     console.log(`Url: ${urlLargeImage} alt: ${altForLargeImage} `);
+    this.setShowModal(true, urlLargeImage, altForLargeImage);
   };
 
   loadMore = () => {
@@ -89,7 +103,15 @@ class App extends Component {
 
   render() {
     const { container, error } = styles;
-    const { images, numberOfHits, isLoading, errorMessage } = this.state;
+    const {
+      images,
+      numberOfHits,
+      isLoading,
+      errorMessage,
+      showModal,
+      modalImageUrl,
+      modalImageAlt,
+    } = this.state;
     console.log(this.state);
     return (
       <div className={container}>
@@ -107,7 +129,7 @@ class App extends Component {
           )
         )}
         {errorMessage && <div className={error}>{errorMessage}</div>}
-        {}
+        {showModal && <Modal src={modalImageUrl} alt={modalImageAlt} />}
       </div>
     );
   }
