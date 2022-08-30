@@ -104,14 +104,6 @@ class App extends Component {
       .catch(error => console.log(error));
   };
 
-  componentDidMount() {
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape') {
-        return this.handleModalClose();
-      }
-    });
-  }
-
   render() {
     const { container, error } = styles;
     const {
