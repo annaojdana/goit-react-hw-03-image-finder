@@ -10,7 +10,7 @@ import Modal from './Modal/Modal';
 const INITIAL_STATE = {
   query: '',
   images: [],
-  limitImages: 12,
+  page: 1,
   numberOfHits: 0,
   showModal: false,
   isLoading: false,
@@ -50,16 +50,6 @@ class App extends Component {
     }));
 
   handleModalClose = () => this.setShowModal(false);
-  componentDidMount() {
-    document.addEventListener('keydown', e => {
-      if (e.key === "Escape") {
-        return this.handleModalClose();
-      }
-    }
-    );
-  };
-
-
 
   handleShowModal = (urlLargeImage, altForLargeImage) =>
     this.setShowModal(true, urlLargeImage, altForLargeImage);
@@ -70,9 +60,10 @@ class App extends Component {
     this.setIsLoading(true);
     const { queryInput } = e.target.elements;
     const queryValue = queryInput.value;
-    const initialImagesLimit = 12;
+    const { page } = this.state;
+
     if (queryValue) {
-      return getImages(queryValue, initialImagesLimit)
+      return getImages(queryValue,page)
         .then(data => {
           if (data.totalHits === 0) {
             this.setIsLoading(false);
@@ -87,7 +78,7 @@ class App extends Component {
             images: data.hits,
             numberOfHits: data.totalHits,
             query: queryValue,
-            limitImages: initialImagesLimit,
+            page:1
           }));
         })
         .catch(error => {
@@ -101,17 +92,25 @@ class App extends Component {
   };
 
   handleLoadMore = () => {
-    const { limitImages, query } = this.state;
-    return getImages(query, limitImages + 12)
+    const { page, query, images } = this.state;
+    return getImages(query, page +1)
       .then(data => {
         return this.setState(oldState => ({
           ...oldState,
-          images: data.hits,
-          limitImages: limitImages + 12,
+          images: [...images,...data.hits],
+          page: page + 1,
         }));
       })
       .catch(error => console.log(error));
   };
+
+  componentDidMount() {
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        return this.handleModalClose();
+      }
+    });
+  }
 
   render() {
     const { container, error } = styles;
@@ -149,7 +148,6 @@ class App extends Component {
             src={modalImageUrl}
             alt={modalImageAlt}
             closeModal={this.handleModalClose}
-
           />
         )}
       </div>
