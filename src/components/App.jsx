@@ -51,6 +51,10 @@ class App extends Component {
 
   handleModalClose = () => this.setShowModal(false);
 
+  handleShowModal = (urlLargeImage, altForLargeImage) =>
+    this.setShowModal(true, urlLargeImage, altForLargeImage);
+
+  
   onSubmit = e => {
     e.preventDefault();
     this.setInitialState();
@@ -81,11 +85,6 @@ class App extends Component {
         console.log(error);
         this.setErrorMessage('Unable to fetch images');
       });
-  };
-
-  handleModal = (urlLargeImage, altForLargeImage) => {
-    console.log(`Url: ${urlLargeImage} alt: ${altForLargeImage} `);
-    this.setShowModal(true, urlLargeImage, altForLargeImage);
   };
 
   loadMore = () => {
@@ -121,7 +120,10 @@ class App extends Component {
         ) : (
           images.length > 0 && (
             <>
-              <ImageGallery imagesData={images} openModal={this.handleModal} />
+              <ImageGallery
+                imagesData={images}
+                openModal={this.handleShowModal}
+              />
               {images.length < numberOfHits && (
                 <Button onClick={this.loadMore} />
               )}
@@ -129,7 +131,13 @@ class App extends Component {
           )
         )}
         {errorMessage && <div className={error}>{errorMessage}</div>}
-        {showModal && <Modal src={modalImageUrl} alt={modalImageAlt} />}
+        {showModal && (
+          <Modal
+            src={modalImageUrl}
+            alt={modalImageAlt}
+            closeModal={this.handleModalClose}
+          />
+        )}
       </div>
     );
   }
