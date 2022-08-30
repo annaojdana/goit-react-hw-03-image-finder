@@ -50,44 +50,57 @@ class App extends Component {
     }));
 
   handleModalClose = () => this.setShowModal(false);
+  componentDidMount() {
+    document.addEventListener('keydown', e => {
+      if (e.key === "Escape") {
+        return this.handleModalClose();
+      }
+    }
+    );
+  };
+
+
 
   handleShowModal = (urlLargeImage, altForLargeImage) =>
     this.setShowModal(true, urlLargeImage, altForLargeImage);
 
-  
-  onSubmit = e => {
+  handleSearchQuery = e => {
     e.preventDefault();
     this.setInitialState();
     this.setIsLoading(true);
     const { queryInput } = e.target.elements;
     const queryValue = queryInput.value;
     const initialImagesLimit = 12;
-    getImages(queryValue, initialImagesLimit)
-      .then(data => {
-        if (data.totalHits === 0) {
+    if (queryValue) {
+      return getImages(queryValue, initialImagesLimit)
+        .then(data => {
+          if (data.totalHits === 0) {
+            this.setIsLoading(false);
+            return this.setErrorMessage(
+              'Sorry, there are no images matching your search query. Please try again.'
+            );
+          }
+          this.setErrorMessage('');
           this.setIsLoading(false);
-          return this.setErrorMessage(
-            'Sorry, there are no images matching your search query. Please try again.'
-          );
-        }
-        this.setErrorMessage('');
-        this.setIsLoading(false);
-        return this.setState(oldState => ({
-          ...oldState,
-          images: data.hits,
-          numberOfHits: data.totalHits,
-          query: queryValue,
-          limitImages: initialImagesLimit,
-        }));
-      })
-      .catch(error => {
-        this.setIsLoading(false);
-        console.log(error);
-        this.setErrorMessage('Unable to fetch images');
-      });
+          return this.setState(oldState => ({
+            ...oldState,
+            images: data.hits,
+            numberOfHits: data.totalHits,
+            query: queryValue,
+            limitImages: initialImagesLimit,
+          }));
+        })
+        .catch(error => {
+          this.setIsLoading(false);
+          console.log(error);
+          this.setErrorMessage('Unable to fetch images');
+        });
+    }
+    this.setIsLoading(false);
+    this.setErrorMessage('The search field cannot be empty');
   };
 
-  loadMore = () => {
+  handleLoadMore = () => {
     const { limitImages, query } = this.state;
     return getImages(query, limitImages + 12)
       .then(data => {
@@ -114,7 +127,7 @@ class App extends Component {
     console.log(this.state);
     return (
       <div className={container}>
-        <Searchbar onSubmit={this.onSubmit} />
+        <Searchbar onSubmit={this.handleSearchQuery} />
         {isLoading ? (
           <Loader />
         ) : (
@@ -125,7 +138,7 @@ class App extends Component {
                 openModal={this.handleShowModal}
               />
               {images.length < numberOfHits && (
-                <Button onClick={this.loadMore} />
+                <Button onClick={this.handleLoadMore} />
               )}
             </>
           )
@@ -136,6 +149,7 @@ class App extends Component {
             src={modalImageUrl}
             alt={modalImageAlt}
             closeModal={this.handleModalClose}
+
           />
         )}
       </div>
