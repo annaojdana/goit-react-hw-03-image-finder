@@ -95,9 +95,9 @@ class App extends Component {
     const { page, query, images } = this.state;
     return getImages(query, page +1)
       .then(data => {
-        return this.setState(oldState => ({
+        this.setState(oldState => ({
           ...oldState,
-          images: [...images,...data.hits],
+          images: [...images, ...data.hits],
           page: page + 1,
         }));
       })
