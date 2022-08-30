@@ -13,11 +13,20 @@ const INITIAL_STATE = {
   numberOfHits: 0,
   openModal: false,
   isLoading: false,
+  errorMessage:''
 };
 class App extends Component {
   state = {
     ...INITIAL_STATE,
   };
+
+  setErrorMessage = errorMessage =>
+    this.setState(oldState => ({
+      ...oldState,
+      errorMessage: errorMessage,
+    }));
+
+
   setIsLoading = isLoading =>
     this.setState(oldState => ({
       ...oldState,
@@ -33,9 +42,9 @@ class App extends Component {
     getImages(queryValue, initialImagesLimit)
       .then(data => {
         if (data.totalHits === 0) {
-          alert(
-            'Sorry, there are no images matching your search query. Please try again.'
-          );
+         this.setErrorMessage(
+           'Sorry, there are no images matching your search query. Please try again.'
+         );
         }
         this.setIsLoading(false);
         return this.setState(oldState => ({
@@ -49,6 +58,7 @@ class App extends Component {
       .catch(error => {
         this.setIsLoading(false);
         console.log(error);
+        this.setErrorMessage('Unable to fetch images');
       });
   };
 
@@ -70,8 +80,8 @@ class App extends Component {
   };
 
   render() {
-    const { container } = styles;
-    const { images, numberOfHits, isLoading } = this.state;
+    const { container, error } = styles;
+    const { images, numberOfHits, isLoading,errorMessage } = this.state;
     console.log(this.state);
     return (
       <div className={container}>
@@ -88,6 +98,7 @@ class App extends Component {
             </>
           )
         )}
+        {errorMessage && <div className="error">{errorMessage}</div>}
         {}
       </div>
     );
