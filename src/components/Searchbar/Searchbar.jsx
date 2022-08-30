@@ -19,7 +19,6 @@ class Searchbar extends React.Component {
             className={input}
             type="text"
             autoComplete="off"
-            autoFocus
             placeholder="Search images and photos"
           />
         </form>
