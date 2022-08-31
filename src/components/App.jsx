@@ -115,7 +115,6 @@ class App extends Component {
       modalImageUrl,
       modalImageAlt,
     } = this.state;
-    console.log(this.state);
     return (
       <div className={container}>
         <Searchbar onSubmit={this.handleSearchQuery} />

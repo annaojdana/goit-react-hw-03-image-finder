@@ -8,12 +8,13 @@ class ImageGalleryItem extends Component {
 
     const { imageData, openModal } = this.props;
     const { item, image } = styles;
-    const { webformatURL, tags, largeImageURL } = imageData;
+    const { webformatURL, tags, largeImageURL,id } = imageData;
 
     return (
       <li className={item}>
         <img
           className={image}
+          key={id}
           src={webformatURL}
           alt={tags}
           onClick={() => openModal(largeImageURL, tags)}
